@@ -6,12 +6,18 @@ These scripts help measure and analyze system performance under various conditio
 """
 
 import time
+import timeit
+import cProfile
+import pstats
 import sys
 import os
 import threading
 from concurrent.futures import ThreadPoolExecutor
 import statistics
 import json
+import io
+import subprocess
+from functools import wraps
 
 # Add the project directory to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +43,28 @@ except ImportError:
     ]
 
 
+def profile_function(func):
+    """Decorator to profile function execution using cProfile"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        pr = cProfile.Profile()
+        pr.enable()
+        result = func(*args, **kwargs)
+        pr.disable()
+        
+        # Save profile stats
+        s = io.StringIO()
+        ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
+        ps.print_stats()
+        
+        print(f"\n=== PROFILE RESULTS FOR {func.__name__} ===")
+        print(s.getvalue()[:1000] + "..." if len(s.getvalue()) > 1000 else s.getvalue())
+        print("=" * 50)
+        
+        return result
+    return wrapper
+
+
 class PerformanceTestSuite:
     """Performance testing suite for the bookstore application"""
     
@@ -47,6 +75,7 @@ class PerformanceTestSuite:
         else:
             self.session = None
         self.results = {}
+        self.profile_data = {}
     
     def measure_execution_time(self, func, *args, **kwargs):
         """Measure execution time of a function"""
@@ -56,27 +85,71 @@ class PerformanceTestSuite:
         execution_time = end_time - start_time
         return result, execution_time
     
+    def timeit_benchmark(self, func, *args, number=1000, **kwargs):
+        """Use timeit for precise benchmarking"""
+        def wrapper():
+            return func(*args, **kwargs)
+        
+        execution_time = timeit.timeit(wrapper, number=number)
+        avg_time = execution_time / number
+        
+        return {
+            'total_time': execution_time,
+            'average_time': avg_time,
+            'iterations': number,
+            'ops_per_second': number / execution_time if execution_time > 0 else 0
+        }
+    
+    @profile_function
+    def profile_cart_operations(self, iterations=1000):
+        """Profile cart operations with cProfile"""
+        cart = Cart()
+        book = Book("Profile Test Book", "Test", 10.99, "/test.jpg")
+        
+        for i in range(iterations):
+            cart.add_book(book, 1)
+            if i % 100 == 0:
+                cart.get_total_price()
+            if i % 200 == 0:
+                cart.clear()
+        
+        return cart.get_total_items()
+    
     def test_cart_performance(self):
-        """Test cart operations performance"""
+        """Test cart operations performance with multiple benchmarking methods"""
         print("Testing Cart Performance...")
         
-        # Test 1: Cart total calculation with many items
+        # Test 1: Cart total calculation with many items using timeit
         cart = Cart()
         book = Book("Performance Test Book", "Test", 10.99, "/test.jpg")
         
-        # Add many items to cart
         quantities = [10, 50, 100, 500, 1000]
         results = {}
+        timeit_results = {}
         
         for qty in quantities:
             cart.clear()
             cart.add_book(book, qty)
             
+            # Standard timing
             _, execution_time = self.measure_execution_time(cart.get_total_price)
             results[f"cart_total_{qty}_items"] = execution_time
-            print(f"Cart total calculation ({qty} items): {execution_time:.6f} seconds")
+            
+            # Precise timeit benchmarking
+            timeit_data = self.timeit_benchmark(cart.get_total_price, number=100)
+            timeit_results[f"cart_total_{qty}_items"] = timeit_data
+            
+            print(f"Cart total calculation ({qty} items):")
+            print(f"  Standard timing: {execution_time:.6f} seconds")
+            print(f"  Timeit average: {timeit_data['average_time']:.6f} seconds")
+            print(f"  Operations/sec: {timeit_data['ops_per_second']:.2f}")
+        
+        # Profile cart operations
+        print("\nProfiling cart operations...")
+        self.profile_cart_operations(1000)
         
         self.results["cart_performance"] = results
+        self.results["cart_timeit_benchmarks"] = timeit_results
         
         # Test 2: Multiple cart operations
         operations_count = 1000
@@ -92,8 +165,9 @@ class PerformanceTestSuite:
         
         return results
     
+    @profile_function
     def test_user_operations_performance(self):
-        """Test user-related operations performance"""
+        """Test user-related operations performance with profiling"""
         print("Testing User Operations Performance...")
         
         user = User("test@example.com", "password", "Test User")
@@ -101,15 +175,32 @@ class PerformanceTestSuite:
         # Test order history with many orders
         order_counts = [10, 50, 100, 500, 1000]
         results = {}
+        timeit_results = {}
         
         for count in order_counts:
             # Clear previous orders
             user.orders = []
             
-            # Add many orders
-            for i in range(count):
+            # Add many orders using timeit for add operations
+            def add_orders():
+                for i in range(10):  # Add 10 orders per iteration
+                    order = Order(
+                        order_id=f"ORDER{len(user.orders):06d}",
+                        user_email="test@example.com",
+                        items=[],
+                        shipping_info={},
+                        payment_info={},
+                        total_amount=10.99
+                    )
+                    user.add_order(order)
+            
+            # Benchmark order addition
+            add_timeit = self.timeit_benchmark(add_orders, number=count//10)
+            
+            # Complete order addition to target count
+            while len(user.orders) < count:
                 order = Order(
-                    order_id=f"ORDER{i:06d}",
+                    order_id=f"ORDER{len(user.orders):06d}",
                     user_email="test@example.com",
                     items=[],
                     shipping_info={},
@@ -120,10 +211,19 @@ class PerformanceTestSuite:
             
             # Measure order history retrieval
             _, execution_time = self.measure_execution_time(user.get_order_history)
+            retrieval_timeit = self.timeit_benchmark(user.get_order_history, number=100)
+            
             results[f"order_history_{count}_orders"] = execution_time
-            print(f"Order history retrieval ({count} orders): {execution_time:.6f} seconds")
+            timeit_results[f"order_add_{count}"] = add_timeit
+            timeit_results[f"order_retrieval_{count}"] = retrieval_timeit
+            
+            print(f"Order operations ({count} orders):")
+            print(f"  History retrieval: {execution_time:.6f} seconds")
+            print(f"  Add operations/sec: {add_timeit['ops_per_second']:.2f}")
+            print(f"  Retrieval ops/sec: {retrieval_timeit['ops_per_second']:.2f}")
         
         self.results["user_performance"] = results
+        self.results["user_timeit_benchmarks"] = timeit_results
         return results
     
     def test_page_load_performance(self):
@@ -253,10 +353,11 @@ class PerformanceTestSuite:
         return None
     
     def test_memory_usage(self):
-        """Test memory usage patterns"""
+        """Test memory usage patterns with detailed profiling"""
         print("Testing Memory Usage...")
         
         import tracemalloc
+        import gc
         
         # Start memory tracing
         tracemalloc.start()
@@ -267,34 +368,53 @@ class PerformanceTestSuite:
         
         # Baseline memory
         baseline = tracemalloc.get_traced_memory()
+        gc.collect()  # Force garbage collection
         
-        # Add many items
-        for i in range(1000):
-            cart.add_book(book, 10)
+        # Memory usage during operations
+        memory_snapshots = []
         
-        # Memory after operations
-        after_ops = tracemalloc.get_traced_memory()
-        
-        # Clear cart
-        cart.clear()
+        for iteration in [100, 500, 1000, 2000]:
+            # Clear cart and force GC
+            cart.clear()
+            gc.collect()
+            
+            # Add many items
+            for i in range(iteration):
+                cart.add_book(book, 10)
+                if i % 100 == 0:
+                    cart.get_total_price()  # Trigger the inefficient calculation
+            
+            current_memory = tracemalloc.get_traced_memory()
+            memory_snapshots.append({
+                'iteration': iteration,
+                'current_mb': current_memory[0] / 1024 / 1024,
+                'peak_mb': current_memory[1] / 1024 / 1024
+            })
+            
+            print(f"Memory at {iteration} items: {current_memory[0] / 1024 / 1024:.2f} MB")
         
         # Memory after cleanup
+        cart.clear()
+        gc.collect()
         after_cleanup = tracemalloc.get_traced_memory()
+        
+        # Get top memory consumers
+        snapshot = tracemalloc.take_snapshot()
+        top_stats = snapshot.statistics('lineno')
+        
+        print("\nTop 10 memory consumers:")
+        for index, stat in enumerate(top_stats[:10], 1):
+            print(f"{index}. {stat}")
         
         tracemalloc.stop()
         
         results = {
             "baseline_memory_mb": baseline[0] / 1024 / 1024,
             "peak_memory_mb": baseline[1] / 1024 / 1024,
-            "after_operations_mb": after_ops[0] / 1024 / 1024,
             "after_cleanup_mb": after_cleanup[0] / 1024 / 1024,
-            "memory_increase_mb": (after_ops[0] - baseline[0]) / 1024 / 1024
+            "memory_snapshots": memory_snapshots,
+            "memory_increase_mb": (max(s['current_mb'] for s in memory_snapshots) - baseline[0] / 1024 / 1024)
         }
-        
-        print(f"Baseline memory: {results['baseline_memory_mb']:.2f} MB")
-        print(f"After operations: {results['after_operations_mb']:.2f} MB")
-        print(f"After cleanup: {results['after_cleanup_mb']:.2f} MB")
-        print(f"Memory increase: {results['memory_increase_mb']:.2f} MB")
         
         self.results["memory_usage"] = results
         return results

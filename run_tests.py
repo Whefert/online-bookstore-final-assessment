@@ -24,8 +24,10 @@ def check_dependencies():
     """Check if all required dependencies are installed"""
     print("Checking dependencies...")
     
-    required_packages = ['flask', 'pytest']
+    required_packages = ['flask', 'pytest', 'requests']
+    optional_packages = ['locust', 'bandit']
     missing_packages = []
+    missing_optional = []
     
     for package in required_packages:
         try:
@@ -35,10 +37,23 @@ def check_dependencies():
             missing_packages.append(package)
             print(f"❌ {package} is missing")
     
+    for package in optional_packages:
+        try:
+            __import__(package)
+            print(f"✅ {package} is installed (optional)")
+        except ImportError:
+            missing_optional.append(package)
+            print(f"⚠️  {package} is missing (optional for advanced testing)")
+    
     if missing_packages:
-        print(f"\nMissing packages: {', '.join(missing_packages)}")
+        print(f"\nMissing required packages: {', '.join(missing_packages)}")
         print("Install with: pip install -r requirements.txt")
         return False
+    
+    if missing_optional:
+        print(f"\nMissing optional packages: {', '.join(missing_optional)}")
+        print("Install with: pip install locust bandit")
+        print("These are needed for load testing and security analysis")
     
     return True
 
@@ -78,6 +93,88 @@ def run_automated_tests():
         return False
 
 def run_performance_tests():
+    """Run performance tests"""
+    print("\n" + "="*60)
+    print("RUNNING PERFORMANCE TESTS")
+    print("="*60)
+    
+    if not os.path.exists("performance_tests.py"):
+        print("❌ performance_tests.py not found!")
+        return False
+    
+    try:
+        # Try quick performance test first
+        result = subprocess.run([
+            sys.executable, "performance_tests.py", "quick"
+        ], capture_output=True, text=True)
+        
+        print(result.stdout)
+        if result.stderr:
+            print("STDERR:", result.stderr)
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error running performance tests: {e}")
+        return False
+
+def run_security_tests():
+    """Run Bandit security analysis"""
+    print("\n" + "="*60)
+    print("RUNNING SECURITY TESTS (BANDIT)")
+    print("="*60)
+    
+    if not os.path.exists("security_tests.py"):
+        print("❌ security_tests.py not found!")
+        return False
+    
+    try:
+        result = subprocess.run([
+            sys.executable, "security_tests.py"
+        ], capture_output=True, text=True)
+        
+        print(result.stdout)
+        if result.stderr:
+            print("STDERR:", result.stderr)
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error running security tests: {e}")
+        return False
+
+def run_load_tests():
+    """Information about running Locust load tests"""
+    print("\n" + "="*60)
+    print("LOAD TESTING WITH LOCUST")
+    print("="*60)
+    
+    if not os.path.exists("locust_load_tests.py"):
+        print("❌ locust_load_tests.py not found!")
+        return False
+    
+    try:
+        # Check if locust is available
+        import locust
+        print("✅ Locust is available")
+        print("\nTo run load tests:")
+        print("1. Ensure Flask app is running: python app.py")
+        print("2. Run Locust: locust -f locust_load_tests.py --host=http://localhost:5000")
+        print("3. Open web UI: http://localhost:8089")
+        print("\nLoad test scenarios available:")
+        print("- BookstoreUser: Regular customer behavior")
+        print("- PowerUser: Heavy usage patterns") 
+        print("- MobileUser: Mobile device simulation")
+        print("- SecurityTestUser: Security testing")
+        print("- PerformanceStressTest: Performance stress testing")
+        
+        return True
+        
+    except ImportError:
+        print("⚠️  Locust not installed")
+        print("Install with: pip install locust")
+        print("Then run: locust -f locust_load_tests.py --host=http://localhost:5000")
+        return False
     """Run performance tests"""
     print("\n" + "="*60)
     print("RUNNING PERFORMANCE TESTS")
@@ -317,6 +414,12 @@ def main():
         # Run performance tests
         success &= run_performance_tests()
         
+        # Run security tests
+        success &= run_security_tests()
+        
+        # Show load testing information
+        run_load_tests()
+        
         # Show manual testing guide
         show_manual_testing_guide()
     
@@ -340,7 +443,9 @@ def main():
     print("3. Perform manual testing using MANUAL_TESTING_CHECKLIST.md")
     print("4. Document bugs using BUG_REPORT_TEMPLATE.md")
     print("5. Analyze performance results")
-    print("6. Review security findings")
+    print("6. Review security findings") 
+    print("7. Run load tests: locust -f locust_load_tests.py --host=http://localhost:5000")
+    print("8. Check advanced profiling data (timeit, cProfile results)")
     
     return 0 if success else 1
 
