@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-10-18T21:32:01.595312",
+  "tests": {
+    "status": "PARTIAL",
+    "main_suite": 1,
+    "pytest_detailed": 1
+  },
+  "security": {
+    "status": "REVIEW",
+    "bandit_scan": 1,
+    "custom_tests": 1
+  },
+  "performance": {
+    "status": "PARTIAL",
+    "benchmark_result": 1
+  },
+  "overall_status": "CONDITIONAL_DEPLOYMENT",
+  "dependencies": {
+    "status": "PASS"
+  },
+  "duration_seconds": 2.55402,
+  "completion_time": "2025-10-18T21:32:04.149332"
+}
