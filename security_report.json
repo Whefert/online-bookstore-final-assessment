@@ -1,0 +1,839 @@
+{
+  "bandit_analysis": {
+    "errors": [],
+    "generated_at": "2025-10-18T20:21:33Z",
+    "metrics": {
+      ".\\app.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 254,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      ".\\locust_load_tests.py": {
+        "CONFIDENCE.HIGH": 17,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 1,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 18,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 276,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      ".\\models.py": {
+        "CONFIDENCE.HIGH": 1,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 1,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 149,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      ".\\performance_tests.py": {
+        "CONFIDENCE.HIGH": 1,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 1,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 410,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      ".\\run_tests.py": {
+        "CONFIDENCE.HIGH": 5,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 5,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 331,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      ".\\security_tests.py": {
+        "CONFIDENCE.HIGH": 3,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 3,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 293,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "_totals": {
+        "CONFIDENCE.HIGH": 27,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 1,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 28,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 1713,
+        "nosec": 0,
+        "skipped_tests": 0
+      }
+    },
+    "results": [
+      {
+        "code": "27         # 30% of users will register/login\n28         if random.random() < 0.3:\n29             self.register_and_login()\n",
+        "col_offset": 11,
+        "end_col_offset": 26,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 28,
+        "line_range": [
+          28
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "41         \"\"\"Register a new user and login\"\"\"\n42         user_id = random.randint(1000, 9999)\n43         email = f\"loadtest{user_id}@example.com\"\n",
+        "col_offset": 18,
+        "end_col_offset": 44,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 42,
+        "line_range": [
+          42
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "43         email = f\"loadtest{user_id}@example.com\"\n44         password = \"testpass123\"\n45         \n",
+        "col_offset": 19,
+        "end_col_offset": 32,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "MEDIUM",
+        "issue_cwe": {
+          "id": 259,
+          "link": "https://cwe.mitre.org/data/definitions/259.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Possible hardcoded password: 'testpass123'",
+        "line_number": 44,
+        "line_range": [
+          44
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b105_hardcoded_password_string.html",
+        "test_id": "B105",
+        "test_name": "hardcoded_password_string"
+      },
+      {
+        "code": "72         \"\"\"Add a random book to cart\"\"\"\n73         book_title = random.choice(self.books)\n74         quantity = random.randint(1, 5)\n",
+        "col_offset": 21,
+        "end_col_offset": 46,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 73,
+        "line_range": [
+          73
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "73         book_title = random.choice(self.books)\n74         quantity = random.randint(1, 5)\n75         \n",
+        "col_offset": 19,
+        "end_col_offset": 39,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 74,
+        "line_range": [
+          74
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "87         if self.cart_items:\n88             item = random.choice(self.cart_items)\n89             new_quantity = random.randint(0, 10)\n",
+        "col_offset": 19,
+        "end_col_offset": 49,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 88,
+        "line_range": [
+          88
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "88             item = random.choice(self.cart_items)\n89             new_quantity = random.randint(0, 10)\n90             \n",
+        "col_offset": 27,
+        "end_col_offset": 48,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 89,
+        "line_range": [
+          89
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "104         if self.cart_items:\n105             item = random.choice(self.cart_items)\n106             \n",
+        "col_offset": 19,
+        "end_col_offset": 49,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 105,
+        "line_range": [
+          105
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "137                     \"zip_code\": \"12345\",\n138                     \"payment_method\": random.choice(payment_methods),\n139                     \"card_number\": \"4444444444444444\",\n",
+        "col_offset": 38,
+        "end_col_offset": 68,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 138,
+        "line_range": [
+          138
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "141                     \"cvv\": \"123\",\n142                     \"discount_code\": random.choice(discount_codes)\n143                 })\n",
+        "col_offset": 37,
+        "end_col_offset": 66,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 142,
+        "line_range": [
+          142
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "160         \"\"\"Perform rapid cart operations to stress test\"\"\"\n161         book_title = random.choice(self.books)\n162         quantity = random.randint(10, 50)  # Larger quantities\n",
+        "col_offset": 21,
+        "end_col_offset": 46,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 161,
+        "line_range": [
+          161
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "161         book_title = random.choice(self.books)\n162         quantity = random.randint(10, 50)  # Larger quantities\n163         \n",
+        "col_offset": 19,
+        "end_col_offset": 41,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 162,
+        "line_range": [
+          162
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "170         # Immediately update quantity\n171         new_quantity = random.randint(1, 100)\n172         self.client.post(\"/update-cart\", data={\n",
+        "col_offset": 23,
+        "end_col_offset": 45,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 171,
+        "line_range": [
+          171
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "181         for _ in range(3):\n182             page = random.choice(pages)\n183             self.client.get(page)\n",
+        "col_offset": 19,
+        "end_col_offset": 39,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 182,
+        "line_range": [
+          182
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "206         \"\"\"Mobile users typically add fewer items\"\"\"\n207         book_title = random.choice(self.books)\n208         quantity = random.randint(1, 2)  # Smaller quantities on mobile\n",
+        "col_offset": 21,
+        "end_col_offset": 46,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 207,
+        "line_range": [
+          207
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "207         book_title = random.choice(self.books)\n208         quantity = random.randint(1, 2)  # Smaller quantities on mobile\n209         \n",
+        "col_offset": 19,
+        "end_col_offset": 39,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 208,
+        "line_range": [
+          208
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "230         pages = [\"/\", \"/cart\", \"/login\", \"/register\", \"/checkout\"]\n231         page = random.choice(pages)\n232         self.client.get(page)\n",
+        "col_offset": 15,
+        "end_col_offset": 35,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 231,
+        "line_range": [
+          231
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "284         \n285         malicious_input = random.choice(malicious_inputs)\n286         \n",
+        "col_offset": 26,
+        "end_col_offset": 57,
+        "filename": ".\\locust_load_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 285,
+        "line_range": [
+          285
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "162         \n163         transaction_id = f\"TXN{random.randint(100000, 999999)}\"\n164         \n",
+        "col_offset": 31,
+        "end_col_offset": 61,
+        "filename": ".\\models.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 330,
+          "link": "https://cwe.mitre.org/data/definitions/330.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+        "line_number": 163,
+        "line_range": [
+          163
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+        "test_id": "B311",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "18 import io\n19 import subprocess\n20 from functools import wraps\n",
+        "col_offset": 0,
+        "end_col_offset": 17,
+        "filename": ".\\performance_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 19,
+        "line_range": [
+          19
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "16 import argparse\n17 import subprocess\n18 import sys\n",
+        "col_offset": 0,
+        "end_col_offset": 17,
+        "filename": ".\\run_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 17,
+        "line_range": [
+          17
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "71         # Run pytest with verbose output\n72         result = subprocess.run([\n73             sys.executable, \"-m\", \"pytest\", \n74             \"test_cases.py\", \n75             \"-v\", \n76             \"--tb=short\",\n77             \"--color=yes\"\n78         ], capture_output=True, text=True)\n79         \n",
+        "col_offset": 17,
+        "end_col_offset": 42,
+        "filename": ".\\run_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 72,
+        "line_range": [
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "106         # Try quick performance test first\n107         result = subprocess.run([\n108             sys.executable, \"performance_tests.py\", \"quick\"\n109         ], capture_output=True, text=True)\n110         \n",
+        "col_offset": 17,
+        "end_col_offset": 42,
+        "filename": ".\\run_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 107,
+        "line_range": [
+          107,
+          108,
+          109
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "131     try:\n132         result = subprocess.run([\n133             sys.executable, \"security_tests.py\"\n134         ], capture_output=True, text=True)\n135         \n",
+        "col_offset": 17,
+        "end_col_offset": 42,
+        "filename": ".\\run_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 132,
+        "line_range": [
+          132,
+          133,
+          134
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "188         # Try quick performance test first\n189         result = subprocess.run([\n190             sys.executable, \"performance_tests.py\", \"quick\"\n191         ], capture_output=True, text=True)\n192         \n",
+        "col_offset": 17,
+        "end_col_offset": 42,
+        "filename": ".\\run_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 189,
+        "line_range": [
+          189,
+          190,
+          191
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "12 \n13 import subprocess\n14 import json\n",
+        "col_offset": 0,
+        "end_col_offset": 17,
+        "filename": ".\\security_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Consider possible security implications associated with the subprocess module.",
+        "line_number": 13,
+        "line_range": [
+          13
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+        "test_id": "B404",
+        "test_name": "blacklist"
+      },
+      {
+        "code": "40             \n41             result = subprocess.run(cmd, capture_output=True, text=True)\n42             \n",
+        "col_offset": 21,
+        "end_col_offset": 72,
+        "filename": ".\\security_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 78,
+          "link": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "subprocess call - check for execution of untrusted input.",
+        "line_number": 41,
+        "line_range": [
+          41
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+        "test_id": "B603",
+        "test_name": "subprocess_without_shell_equals_true"
+      },
+      {
+        "code": "292                                 })\n293                     except Exception:\n294                         continue\n295         \n",
+        "col_offset": 20,
+        "end_col_offset": 32,
+        "filename": ".\\security_tests.py",
+        "issue_confidence": "HIGH",
+        "issue_cwe": {
+          "id": 703,
+          "link": "https://cwe.mitre.org/data/definitions/703.html"
+        },
+        "issue_severity": "LOW",
+        "issue_text": "Try, Except, Continue detected.",
+        "line_number": 293,
+        "line_range": [
+          293,
+          294
+        ],
+        "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html",
+        "test_id": "B112",
+        "test_name": "try_except_continue"
+      }
+    ]
+  },
+  "custom_security_tests": {
+    "password_security": [
+      {
+        "severity": "HIGH",
+        "issue": "Passwords stored in plain text",
+        "file": "models.py",
+        "description": "User passwords are stored without hashing",
+        "recommendation": "Use bcrypt or similar hashing library"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Hardcoded credentials found",
+        "file": "models.py",
+        "description": "Demo credentials found in source code",
+        "recommendation": "Move credentials to environment variables"
+      }
+    ],
+    "input_validation": [
+      {
+        "severity": "MEDIUM",
+        "issue": "Unsafe type conversion",
+        "file": "app.py",
+        "description": "Direct int() conversion without error handling",
+        "recommendation": "Add try-catch blocks for type conversions"
+      }
+    ],
+    "session_security": [],
+    "file_security": [
+      {
+        "severity": "HIGH",
+        "issue": "Sensitive instructor file detected",
+        "file": "INSTRUCTOR_BUGS_LIST.md",
+        "description": "Instructor materials should not be in student workspace",
+        "recommendation": "Remove or restrict access to instructor files"
+      }
+    ],
+    "sql_injection": [
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: SELECT * FROM",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\examples\\db_print.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: SELECT * FROM",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\examples\\xls_read.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: INSERT INTO",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\examples\\xls_write.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DROP TABLE",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\examples\\xls_write.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: SELECT * FROM",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\test\\adodbapitest.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: INSERT INTO",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\test\\adodbapitest.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DELETE FROM",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\test\\adodbapitest.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DROP TABLE",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\test\\adodbapitest.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: INSERT INTO",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\test\\dbapi20.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DROP TABLE",
+        "file": ".\\venv\\Lib\\site-packages\\adodbapi\\test\\dbapi20.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: SELECT * FROM",
+        "file": ".\\venv\\Lib\\site-packages\\bandit\\plugins\\injection_sql.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DELETE FROM",
+        "file": ".\\venv\\Lib\\site-packages\\bandit\\plugins\\injection_sql.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DROP TABLE",
+        "file": ".\\venv\\Lib\\site-packages\\pygments\\lexers\\_qlik_builtins.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: SELECT * FROM",
+        "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\typing_extensions.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: SELECT * FROM",
+        "file": ".\\venv\\Lib\\site-packages\\win32\\test\\test_odbc.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: INSERT INTO",
+        "file": ".\\venv\\Lib\\site-packages\\win32\\test\\test_odbc.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DELETE FROM",
+        "file": ".\\venv\\Lib\\site-packages\\win32\\test\\test_odbc.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Potential SQL query detected: DROP TABLE",
+        "file": ".\\venv\\Lib\\site-packages\\win32\\test\\test_odbc.py",
+        "description": "Raw SQL detected - review for injection vulnerabilities",
+        "recommendation": "Use parameterized queries or ORM"
+      }
+    ]
+  }
+}

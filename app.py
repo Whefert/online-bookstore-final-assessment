@@ -1,9 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 from models import Book, Cart, User, Order, PaymentGateway, EmailService
 import uuid
+import os
+import secrets
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Required for session management
+# Use secure secret key from environment or generate one
+app.secret_key = os.environ.get('SECRET_KEY') or secrets.token_hex(32)
+# Configure secure session cookies
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 # Global storage for users and orders (in production, use a database)
 users = {}  # email -> User object
@@ -57,7 +64,14 @@ def index():
 @app.route('/add-to-cart', methods=['POST'])
 def add_to_cart():
     book_title = request.form.get('title')
-    quantity = int(request.form.get('quantity', 1))
+    try:
+        quantity = int(request.form.get('quantity', 1))
+        if quantity <= 0:
+            flash('Quantity must be a positive number')
+            return redirect(url_for('index'))
+    except (ValueError, TypeError):
+        flash('Invalid quantity format')
+        return redirect(url_for('index'))
     
     book = None
     for b in BOOKS:
@@ -100,7 +114,11 @@ def update_cart():
         - Confirmation of update otherwise
     """
     book_title = request.form.get('title')
-    quantity = int(request.form.get('quantity', 1))
+    try:
+        quantity = int(request.form.get('quantity', 1))
+    except (ValueError, TypeError):
+        flash('Invalid quantity format')
+        return redirect(url_for('view_cart'))
     
     cart.update_quantity(book_title, quantity)
     
@@ -281,7 +299,7 @@ def login():
         password = request.form.get('password')
         
         user = users.get(email)
-        if user and user.password == password:
+        if user and user.verify_password(password):
             session['user_email'] = email
             flash('Logged in successfully!', 'success')
             return redirect(url_for('index'))
@@ -327,4 +345,5 @@ def update_profile():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Debug mode disabled for security
+    app.run(debug=False, host='127.0.0.1', port=5000)

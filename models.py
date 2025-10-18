@@ -50,7 +50,11 @@ class Cart:
 
     def update_quantity(self, book_title, quantity):
         if book_title in self.items:
-            self.items[book_title].quantity = quantity
+            if quantity <= 0:
+                # Remove item if quantity is 0 or negative
+                del self.items[book_title]
+            else:
+                self.items[book_title].quantity = quantity
 
     def get_total_price(self):
         total = 0
@@ -72,16 +76,26 @@ class Cart:
         return len(self.items) == 0
 
 
+import bcrypt
+
 class User:
     """User account management class"""
     def __init__(self, email, password, name="", address=""):
         self.email = email
-        self.password = password
+        # Hash password securely
+        if isinstance(password, str):
+            self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        else:
+            self.password = password  # Already hashed
         self.name = name
         self.address = address
         self.orders = []
         self.temp_data = []
         self.cache = {}
+    
+    def verify_password(self, password):
+        """Verify password against stored hash"""
+        return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
     
     def add_order(self, order):
         self.orders.append(order)
@@ -123,6 +137,14 @@ class PaymentGateway:
     def process_payment(payment_info):
         """Mock payment processing - returns success/failure with mock logic"""
         card_number = payment_info.get('card_number', '')
+        
+        # Validate card number is provided
+        if not card_number or card_number is None:
+            return {
+                'success': False,
+                'message': 'Payment failed: Card number is required',
+                'transaction_id': None
+            }
         
         # Mock logic: cards ending in '1111' fail, others succeed
         if card_number.endswith('1111'):

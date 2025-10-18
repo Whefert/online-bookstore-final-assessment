@@ -12,6 +12,7 @@ The Online Bookstore test suite has been enhanced with advanced testing tools to
 ## 🚀 Quick Start
 
 ### 1. Install All Dependencies
+
 ```bash
 # Install basic requirements
 pip install -r requirements.txt
@@ -21,6 +22,7 @@ pip install locust bandit
 ```
 
 ### 2. Run Complete Test Suite
+
 ```bash
 python run_tests.py
 ```
@@ -36,12 +38,13 @@ Provides precise timing measurements for performance-critical operations:
 def test_cart_performance():
     def calculate_total():
         return cart.get_total_price()
-    
+
     avg_time = timeit_test(calculate_total, number=100)
     print(f"Average time: {avg_time:.6f} seconds")
 ```
 
 **Usage in Test Suite:**
+
 - Automatically integrated in performance tests
 - Provides operations-per-second metrics
 - Compares different implementation approaches
@@ -59,12 +62,14 @@ def test_complex_operation(self):
 ```
 
 **Features:**
+
 - Shows time spent in each function
 - Identifies inefficient code paths
 - Profiles both application and test code
 - Generates detailed call statistics
 
 **Output Example:**
+
 ```
 === PROFILE: test_cart_total_calculation_performance ===
          1003 function calls in 0.001 seconds
@@ -81,6 +86,7 @@ def test_complex_operation(self):
 Simulate multiple users and realistic load scenarios:
 
 #### **Setup and Execution:**
+
 ```bash
 # Start the Flask app
 python app.py
@@ -95,22 +101,26 @@ http://localhost:8089
 #### **Available User Types:**
 
 1. **BookstoreUser** - Regular customer behavior
+
    - Browse products (weight: 10)
    - Add items to cart (weight: 3)
    - Update cart quantities (weight: 2)
    - Complete checkout (weight: 2)
 
 2. **PowerUser** - Heavy usage patterns
+
    - Rapid cart operations with large quantities
    - Stress testing scenarios
    - Higher operation frequency
 
 3. **MobileUser** - Mobile device simulation
+
    - Slower, more deliberate actions
    - Mobile-specific user agent
    - Different usage patterns
 
 4. **SecurityTestUser** - Security testing
+
    - SQL injection attempts
    - XSS testing
    - Input validation testing
@@ -120,6 +130,7 @@ http://localhost:8089
    - Resource-intensive scenarios
 
 #### **Load Test Scenarios:**
+
 ```python
 # Example configurations
 scenarios = {
@@ -135,6 +146,7 @@ scenarios = {
 Automated security vulnerability scanning:
 
 #### **Direct Usage:**
+
 ```bash
 # Run security tests
 python security_tests.py
@@ -146,16 +158,19 @@ bandit -r . -f json -o bandit_report.json
 #### **Security Tests Included:**
 
 1. **Password Security**
+
    - Plain text password detection
    - Hardcoded credential scanning
    - Password hashing verification
 
 2. **Input Validation**
+
    - Unsafe type conversions
    - SQL injection patterns
    - XSS vulnerability detection
 
 3. **Session Security**
+
    - Weak secret key detection
    - Session configuration analysis
    - Cookie security settings
@@ -166,6 +181,7 @@ bandit -r . -f json -o bandit_report.json
    - Configuration file security
 
 #### **Example Security Report:**
+
 ```json
 {
   "results": [
@@ -185,16 +201,19 @@ bandit -r . -f json -o bandit_report.json
 ### **Performance Test Categories:**
 
 1. **Micro-benchmarks** (timeit)
+
    - Individual function performance
    - Algorithm efficiency comparison
    - Operation cost analysis
 
 2. **Function Profiling** (cProfile)
+
    - Call stack analysis
    - Time distribution across functions
    - Bottleneck identification
 
 3. **Load Testing** (Locust)
+
    - Concurrent user simulation
    - Throughput measurement
    - Resource utilization under load
@@ -233,11 +252,13 @@ bandit -r . -f json -o bandit_report.json
 ### **Multi-layered Security Testing:**
 
 1. **Static Analysis** (Bandit)
+
    - Code vulnerability scanning
    - Security anti-pattern detection
    - Compliance checking
 
 2. **Dynamic Testing** (Custom tests)
+
    - Input validation testing
    - Authentication testing
    - Session management testing
@@ -256,16 +277,16 @@ class TestSecurity(TestBookstore):
         # Run Bandit analysis
         security_suite = SecurityTestSuite()
         bandit_results = security_suite.run_bandit_analysis()
-        
+
         # Run custom security tests
         custom_results = security_suite.custom_security_tests()
-        
+
         # Verify no high-severity issues
         high_severity_count = len([
             issue for issue in bandit_results.get('results', [])
             if issue.get('issue_severity') == 'HIGH'
         ])
-        
+
         assert high_severity_count == 0, f"Found {high_severity_count} high-severity security issues"
 ```
 
@@ -274,16 +295,19 @@ class TestSecurity(TestBookstore):
 ### **Comprehensive Test Reports:**
 
 1. **Performance Report**
+
    - Execution time trends
    - Resource utilization
    - Performance regression detection
 
 2. **Security Report**
+
    - Vulnerability summary
    - Risk assessment
    - Remediation recommendations
 
 3. **Load Test Report**
+
    - Throughput analysis
    - Response time distribution
    - Error rate analysis
@@ -308,24 +332,28 @@ locust -f locust_load_tests.py     # Load testing (web UI)
 ## 🎯 Best Practices
 
 ### **Performance Testing:**
+
 1. Run baseline measurements before optimization
 2. Use consistent test environments
 3. Profile both success and failure scenarios
 4. Monitor memory usage alongside execution time
 
 ### **Security Testing:**
+
 1. Run Bandit analysis on every code change
 2. Test with realistic malicious inputs
 3. Verify security measures under load
 4. Document and track security findings
 
 ### **Load Testing:**
+
 1. Start with realistic user behavior
 2. Gradually increase load to find limits
 3. Monitor both client and server metrics
 4. Test various user scenarios simultaneously
 
 ### **Integration:**
+
 1. Automate all testing in CI/CD pipeline
 2. Set performance and security baselines
 3. Alert on regression or new vulnerabilities
@@ -336,16 +364,19 @@ locust -f locust_load_tests.py     # Load testing (web UI)
 ### **Common Issues:**
 
 1. **Missing Dependencies:**
+
    ```bash
    pip install locust bandit requests
    ```
 
 2. **Locust Web UI Not Accessible:**
+
    - Check firewall settings
    - Verify port 8089 is available
    - Ensure localhost binding is correct
 
 3. **Bandit False Positives:**
+
    - Use `.bandit` configuration file
    - Exclude test files from analysis
    - Review and whitelist known safe patterns
@@ -378,16 +409,19 @@ locust -f locust_load_tests.py     # Load testing (web UI)
 This integrated testing approach teaches:
 
 1. **Professional Testing Practices**
+
    - Industry-standard tool usage
    - Comprehensive analysis methodology
    - Automated testing integration
 
 2. **Performance Engineering**
+
    - Bottleneck identification
    - Optimization techniques
    - Scalability assessment
 
 3. **Security Awareness**
+
    - Vulnerability detection
    - Security testing automation
    - Risk assessment methodology
