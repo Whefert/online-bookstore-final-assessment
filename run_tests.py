@@ -362,8 +362,8 @@ Students should be able to:
 *This report provides a foundation for comprehensive system testing education.*
 """
     
-    # Save report
-    with open("TEST_EXECUTION_REPORT.md", "w") as f:
+    # Save report with UTF-8 encoding to handle Unicode characters
+    with open("TEST_EXECUTION_REPORT.md", "w", encoding='utf-8') as f:
         f.write(report_content)
     
     print("✅ Test report generated: TEST_EXECUTION_REPORT.md")

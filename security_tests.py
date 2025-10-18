@@ -355,9 +355,9 @@ class SecurityTestSuite:
         print("7. Implement proper error handling")
         print("8. Add security headers")
         
-        # Save detailed report
-        with open("security_report.json", "w") as f:
-            json.dump(self.results, f, indent=2)
+        # Save detailed report with UTF-8 encoding
+        with open("security_report.json", "w", encoding='utf-8') as f:
+            json.dump(self.results, f, indent=2, ensure_ascii=False)
         
         print(f"\nDetailed report saved to: security_report.json")
     

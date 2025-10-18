@@ -1,6 +1,6 @@
 {
   "errors": [],
-  "generated_at": "2025-10-18T20:21:33Z",
+  "generated_at": "2025-10-18T21:10:03Z",
   "metrics": {
     ".\\app.py": {
       "CONFIDENCE.HIGH": 0,
@@ -80,23 +80,36 @@
       "nosec": 0,
       "skipped_tests": 0
     },
+    ".\\validate_deployment.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 1,
+      "SEVERITY.LOW": 4,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 241,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
     "_totals": {
-      "CONFIDENCE.HIGH": 27,
+      "CONFIDENCE.HIGH": 32,
       "CONFIDENCE.LOW": 0,
       "CONFIDENCE.MEDIUM": 1,
       "CONFIDENCE.UNDEFINED": 0,
-      "SEVERITY.HIGH": 0,
-      "SEVERITY.LOW": 28,
+      "SEVERITY.HIGH": 1,
+      "SEVERITY.LOW": 32,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 1713,
+      "loc": 1954,
       "nosec": 0,
       "skipped_tests": 0
     }
   },
   "results": [
     {
-      "code": "27         # 30% of users will register/login\n28         if random.random() < 0.3:\n29             self.register_and_login()\n",
+      "code": "29         # 30% of users will register/login\n30         if random.random() < 0.3:\n31             self.register_and_login()\n",
       "col_offset": 11,
       "end_col_offset": 26,
       "filename": ".\\locust_load_tests.py",
@@ -107,16 +120,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 28,
+      "line_number": 30,
       "line_range": [
-        28
+        30
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "41         \"\"\"Register a new user and login\"\"\"\n42         user_id = random.randint(1000, 9999)\n43         email = f\"loadtest{user_id}@example.com\"\n",
+      "code": "43         \"\"\"Register a new user and login\"\"\"\n44         user_id = random.randint(1000, 9999)\n45         email = f\"loadtest{user_id}@example.com\"\n",
       "col_offset": 18,
       "end_col_offset": 44,
       "filename": ".\\locust_load_tests.py",
@@ -127,16 +140,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 42,
+      "line_number": 44,
       "line_range": [
-        42
+        44
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "43         email = f\"loadtest{user_id}@example.com\"\n44         password = \"testpass123\"\n45         \n",
+      "code": "45         email = f\"loadtest{user_id}@example.com\"\n46         password = \"testpass123\"\n47         \n",
       "col_offset": 19,
       "end_col_offset": 32,
       "filename": ".\\locust_load_tests.py",
@@ -147,16 +160,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Possible hardcoded password: 'testpass123'",
-      "line_number": 44,
+      "line_number": 46,
       "line_range": [
-        44
+        46
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b105_hardcoded_password_string.html",
       "test_id": "B105",
       "test_name": "hardcoded_password_string"
     },
     {
-      "code": "72         \"\"\"Add a random book to cart\"\"\"\n73         book_title = random.choice(self.books)\n74         quantity = random.randint(1, 5)\n",
+      "code": "74         \"\"\"Add a random book to cart\"\"\"\n75         book_title = random.choice(self.books)\n76         quantity = random.randint(1, 5)\n",
       "col_offset": 21,
       "end_col_offset": 46,
       "filename": ".\\locust_load_tests.py",
@@ -167,16 +180,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 73,
+      "line_number": 75,
       "line_range": [
-        73
+        75
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "73         book_title = random.choice(self.books)\n74         quantity = random.randint(1, 5)\n75         \n",
+      "code": "75         book_title = random.choice(self.books)\n76         quantity = random.randint(1, 5)\n77         \n",
       "col_offset": 19,
       "end_col_offset": 39,
       "filename": ".\\locust_load_tests.py",
@@ -187,16 +200,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 74,
+      "line_number": 76,
       "line_range": [
-        74
+        76
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "87         if self.cart_items:\n88             item = random.choice(self.cart_items)\n89             new_quantity = random.randint(0, 10)\n",
+      "code": "89         if self.cart_items:\n90             item = random.choice(self.cart_items)\n91             new_quantity = random.randint(0, 10)\n",
       "col_offset": 19,
       "end_col_offset": 49,
       "filename": ".\\locust_load_tests.py",
@@ -207,16 +220,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 88,
+      "line_number": 90,
       "line_range": [
-        88
+        90
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "88             item = random.choice(self.cart_items)\n89             new_quantity = random.randint(0, 10)\n90             \n",
+      "code": "90             item = random.choice(self.cart_items)\n91             new_quantity = random.randint(0, 10)\n92             \n",
       "col_offset": 27,
       "end_col_offset": 48,
       "filename": ".\\locust_load_tests.py",
@@ -227,16 +240,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 89,
+      "line_number": 91,
       "line_range": [
-        89
+        91
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "104         if self.cart_items:\n105             item = random.choice(self.cart_items)\n106             \n",
+      "code": "106         if self.cart_items:\n107             item = random.choice(self.cart_items)\n108             \n",
       "col_offset": 19,
       "end_col_offset": 49,
       "filename": ".\\locust_load_tests.py",
@@ -247,16 +260,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 105,
+      "line_number": 107,
       "line_range": [
-        105
+        107
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "137                     \"zip_code\": \"12345\",\n138                     \"payment_method\": random.choice(payment_methods),\n139                     \"card_number\": \"4444444444444444\",\n",
+      "code": "139                     \"zip_code\": \"12345\",\n140                     \"payment_method\": random.choice(payment_methods),\n141                     \"card_number\": \"4444444444444444\",\n",
       "col_offset": 38,
       "end_col_offset": 68,
       "filename": ".\\locust_load_tests.py",
@@ -267,16 +280,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 138,
+      "line_number": 140,
       "line_range": [
-        138
+        140
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "141                     \"cvv\": \"123\",\n142                     \"discount_code\": random.choice(discount_codes)\n143                 })\n",
+      "code": "143                     \"cvv\": \"123\",\n144                     \"discount_code\": random.choice(discount_codes)\n145                 })\n",
       "col_offset": 37,
       "end_col_offset": 66,
       "filename": ".\\locust_load_tests.py",
@@ -287,179 +300,19 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 142,
+      "line_number": 144,
       "line_range": [
-        142
+        144
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
     },
     {
-      "code": "160         \"\"\"Perform rapid cart operations to stress test\"\"\"\n161         book_title = random.choice(self.books)\n162         quantity = random.randint(10, 50)  # Larger quantities\n",
+      "code": "162         \"\"\"Perform rapid cart operations to stress test\"\"\"\n163         book_title = random.choice(self.books)\n164         quantity = random.randint(10, 50)  # Larger quantities\n",
       "col_offset": 21,
       "end_col_offset": 46,
       "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 161,
-      "line_range": [
-        161
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "161         book_title = random.choice(self.books)\n162         quantity = random.randint(10, 50)  # Larger quantities\n163         \n",
-      "col_offset": 19,
-      "end_col_offset": 41,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 162,
-      "line_range": [
-        162
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "170         # Immediately update quantity\n171         new_quantity = random.randint(1, 100)\n172         self.client.post(\"/update-cart\", data={\n",
-      "col_offset": 23,
-      "end_col_offset": 45,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 171,
-      "line_range": [
-        171
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "181         for _ in range(3):\n182             page = random.choice(pages)\n183             self.client.get(page)\n",
-      "col_offset": 19,
-      "end_col_offset": 39,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 182,
-      "line_range": [
-        182
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "206         \"\"\"Mobile users typically add fewer items\"\"\"\n207         book_title = random.choice(self.books)\n208         quantity = random.randint(1, 2)  # Smaller quantities on mobile\n",
-      "col_offset": 21,
-      "end_col_offset": 46,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 207,
-      "line_range": [
-        207
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "207         book_title = random.choice(self.books)\n208         quantity = random.randint(1, 2)  # Smaller quantities on mobile\n209         \n",
-      "col_offset": 19,
-      "end_col_offset": 39,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 208,
-      "line_range": [
-        208
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "230         pages = [\"/\", \"/cart\", \"/login\", \"/register\", \"/checkout\"]\n231         page = random.choice(pages)\n232         self.client.get(page)\n",
-      "col_offset": 15,
-      "end_col_offset": 35,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 231,
-      "line_range": [
-        231
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "284         \n285         malicious_input = random.choice(malicious_inputs)\n286         \n",
-      "col_offset": 26,
-      "end_col_offset": 57,
-      "filename": ".\\locust_load_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 330,
-        "link": "https://cwe.mitre.org/data/definitions/330.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
-      "line_number": 285,
-      "line_range": [
-        285
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
-      "test_id": "B311",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "162         \n163         transaction_id = f\"TXN{random.randint(100000, 999999)}\"\n164         \n",
-      "col_offset": 31,
-      "end_col_offset": 61,
-      "filename": ".\\models.py",
       "issue_confidence": "HIGH",
       "issue_cwe": {
         "id": 330,
@@ -476,10 +329,190 @@
       "test_name": "blacklist"
     },
     {
-      "code": "18 import io\n19 import subprocess\n20 from functools import wraps\n",
+      "code": "163         book_title = random.choice(self.books)\n164         quantity = random.randint(10, 50)  # Larger quantities\n165         \n",
+      "col_offset": 19,
+      "end_col_offset": 41,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 164,
+      "line_range": [
+        164
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "172         # Immediately update quantity\n173         new_quantity = random.randint(1, 100)\n174         self.client.post(\"/update-cart\", data={\n",
+      "col_offset": 23,
+      "end_col_offset": 45,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 173,
+      "line_range": [
+        173
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "183         for _ in range(3):\n184             page = random.choice(pages)\n185             self.client.get(page)\n",
+      "col_offset": 19,
+      "end_col_offset": 39,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 184,
+      "line_range": [
+        184
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "208         \"\"\"Mobile users typically add fewer items\"\"\"\n209         book_title = random.choice(self.books)\n210         quantity = random.randint(1, 2)  # Smaller quantities on mobile\n",
+      "col_offset": 21,
+      "end_col_offset": 46,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 209,
+      "line_range": [
+        209
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "209         book_title = random.choice(self.books)\n210         quantity = random.randint(1, 2)  # Smaller quantities on mobile\n211         \n",
+      "col_offset": 19,
+      "end_col_offset": 39,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 210,
+      "line_range": [
+        210
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "232         pages = [\"/\", \"/cart\", \"/login\", \"/register\", \"/checkout\"]\n233         page = random.choice(pages)\n234         self.client.get(page)\n",
+      "col_offset": 15,
+      "end_col_offset": 35,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 233,
+      "line_range": [
+        233
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "286         \n287         malicious_input = random.choice(malicious_inputs)\n288         \n",
+      "col_offset": 26,
+      "end_col_offset": 57,
+      "filename": ".\\locust_load_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 287,
+      "line_range": [
+        287
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "164         \n165         transaction_id = f\"TXN{random.randint(100000, 999999)}\"\n166         \n",
+      "col_offset": 31,
+      "end_col_offset": 61,
+      "filename": ".\\models.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 165,
+      "line_range": [
+        165
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "20 import io\n21 import subprocess\n22 from functools import wraps\n",
       "col_offset": 0,
       "end_col_offset": 17,
       "filename": ".\\performance_tests.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 21,
+      "line_range": [
+        21
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "18 import argparse\n19 import subprocess\n20 import sys\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": ".\\run_tests.py",
       "issue_confidence": "HIGH",
       "issue_cwe": {
         "id": 78,
@@ -496,27 +529,7 @@
       "test_name": "blacklist"
     },
     {
-      "code": "16 import argparse\n17 import subprocess\n18 import sys\n",
-      "col_offset": 0,
-      "end_col_offset": 17,
-      "filename": ".\\run_tests.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 78,
-        "link": "https://cwe.mitre.org/data/definitions/78.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Consider possible security implications associated with the subprocess module.",
-      "line_number": 17,
-      "line_range": [
-        17
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
-      "test_id": "B404",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "71         # Run pytest with verbose output\n72         result = subprocess.run([\n73             sys.executable, \"-m\", \"pytest\", \n74             \"test_cases.py\", \n75             \"-v\", \n76             \"--tb=short\",\n77             \"--color=yes\"\n78         ], capture_output=True, text=True)\n79         \n",
+      "code": "73         # Run pytest with verbose output\n74         result = subprocess.run([\n75             sys.executable, \"-m\", \"pytest\", \n76             \"test_cases.py\", \n77             \"-v\", \n78             \"--tb=short\",\n79             \"--color=yes\"\n80         ], capture_output=True, text=True)\n81         \n",
       "col_offset": 17,
       "end_col_offset": 42,
       "filename": ".\\run_tests.py",
@@ -527,22 +540,22 @@
       },
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
-      "line_number": 72,
+      "line_number": 74,
       "line_range": [
-        72,
-        73,
         74,
         75,
         76,
         77,
-        78
+        78,
+        79,
+        80
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
     },
     {
-      "code": "106         # Try quick performance test first\n107         result = subprocess.run([\n108             sys.executable, \"performance_tests.py\", \"quick\"\n109         ], capture_output=True, text=True)\n110         \n",
+      "code": "108         # Try quick performance test first\n109         result = subprocess.run([\n110             sys.executable, \"performance_tests.py\", \"quick\"\n111         ], capture_output=True, text=True)\n112         \n",
       "col_offset": 17,
       "end_col_offset": 42,
       "filename": ".\\run_tests.py",
@@ -553,18 +566,18 @@
       },
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
-      "line_number": 107,
+      "line_number": 109,
       "line_range": [
-        107,
-        108,
-        109
+        109,
+        110,
+        111
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
     },
     {
-      "code": "131     try:\n132         result = subprocess.run([\n133             sys.executable, \"security_tests.py\"\n134         ], capture_output=True, text=True)\n135         \n",
+      "code": "133     try:\n134         result = subprocess.run([\n135             sys.executable, \"security_tests.py\"\n136         ], capture_output=True, text=True)\n137         \n",
       "col_offset": 17,
       "end_col_offset": 42,
       "filename": ".\\run_tests.py",
@@ -575,18 +588,18 @@
       },
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
-      "line_number": 132,
+      "line_number": 134,
       "line_range": [
-        132,
-        133,
-        134
+        134,
+        135,
+        136
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
     },
     {
-      "code": "188         # Try quick performance test first\n189         result = subprocess.run([\n190             sys.executable, \"performance_tests.py\", \"quick\"\n191         ], capture_output=True, text=True)\n192         \n",
+      "code": "190         # Try quick performance test first\n191         result = subprocess.run([\n192             sys.executable, \"performance_tests.py\", \"quick\"\n193         ], capture_output=True, text=True)\n194         \n",
       "col_offset": 17,
       "end_col_offset": 42,
       "filename": ".\\run_tests.py",
@@ -597,18 +610,18 @@
       },
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
-      "line_number": 189,
+      "line_number": 191,
       "line_range": [
-        189,
-        190,
-        191
+        191,
+        192,
+        193
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
     },
     {
-      "code": "12 \n13 import subprocess\n14 import json\n",
+      "code": "14 \n15 import subprocess\n16 import json\n",
       "col_offset": 0,
       "end_col_offset": 17,
       "filename": ".\\security_tests.py",
@@ -619,16 +632,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Consider possible security implications associated with the subprocess module.",
-      "line_number": 13,
+      "line_number": 15,
       "line_range": [
-        13
+        15
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
       "test_id": "B404",
       "test_name": "blacklist"
     },
     {
-      "code": "40             \n41             result = subprocess.run(cmd, capture_output=True, text=True)\n42             \n",
+      "code": "42             \n43             result = subprocess.run(cmd, capture_output=True, text=True)\n44             \n",
       "col_offset": 21,
       "end_col_offset": 72,
       "filename": ".\\security_tests.py",
@@ -639,16 +652,16 @@
       },
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
-      "line_number": 41,
+      "line_number": 43,
       "line_range": [
-        41
+        43
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
     },
     {
-      "code": "292                                 })\n293                     except Exception:\n294                         continue\n295         \n",
+      "code": "294                                 })\n295                     except Exception:\n296                         continue\n297         \n",
       "col_offset": 20,
       "end_col_offset": 32,
       "filename": ".\\security_tests.py",
@@ -659,14 +672,123 @@
       },
       "issue_severity": "LOW",
       "issue_text": "Try, Except, Continue detected.",
-      "line_number": 293,
+      "line_number": 295,
       "line_range": [
-        293,
-        294
+        295,
+        296
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html",
       "test_id": "B112",
       "test_name": "try_except_continue"
+    },
+    {
+      "code": "24 \n25 import subprocess\n26 import sys\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": ".\\validate_deployment.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 25,
+      "line_range": [
+        25
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "69                 command, \n70                 shell=True, \n71                 capture_output=True, \n72                 text=True, \n73                 timeout=300  # 5 minute timeout\n74             )\n75             return result\n76         except subprocess.TimeoutExpired:\n77             self.print_error(f\"Command timed out: {command}\")\n",
+      "col_offset": 21,
+      "end_col_offset": 13,
+      "filename": ".\\validate_deployment.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "subprocess call with shell=True identified, security issue.",
+      "line_number": 70,
+      "line_range": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html",
+      "test_id": "B602",
+      "test_name": "subprocess_popen_with_shell_equals_true"
+    },
+    {
+      "code": "100                 if dep == 'python':\n101                     result = subprocess.run([sys.executable, '--version'], \n102                                           capture_output=True, text=True)\n103                 elif dep == 'pip':\n",
+      "col_offset": 29,
+      "end_col_offset": 73,
+      "filename": ".\\validate_deployment.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 101,
+      "line_range": [
+        101,
+        102
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "103                 elif dep == 'pip':\n104                     result = subprocess.run([sys.executable, '-m', 'pip', '--version'], \n105                                           capture_output=True, text=True)\n106                 else:\n",
+      "col_offset": 29,
+      "end_col_offset": 73,
+      "filename": ".\\validate_deployment.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 104,
+      "line_range": [
+        104,
+        105
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "106                 else:\n107                     result = subprocess.run([sys.executable, '-c', f'import {dep}'], \n108                                           capture_output=True, text=True)\n109                 \n",
+      "col_offset": 29,
+      "end_col_offset": 73,
+      "filename": ".\\validate_deployment.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 107,
+      "line_range": [
+        107,
+        108
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
     }
   ]
 }
